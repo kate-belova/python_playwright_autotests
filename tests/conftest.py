@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-from playwright.sync_api import sync_playwright, ViewportSize
 
 from pages.basket_page import BasketPage
 from pages.login_page import LoginPage
@@ -28,26 +27,15 @@ def pytest_addoption(parser):
     # fmt: on
 
 
-@pytest.fixture()
-def page(request):
-    print("\nStart browser for test")
-
+@pytest.fixture(scope="session")
+def browser_context_args(browser_context_args, request):
     language = request.config.getoption("--language")
 
-    playwright = sync_playwright().start()
-    browser = playwright.chromium.launch()
-    context = browser.new_context(
-        viewport=ViewportSize(width=1920, height=1080), locale=language
-    )
-    page = context.new_page()
-
-    yield page
-
-    print("\nQuit browser")
-
-    context.close()
-    browser.close()
-    playwright.stop()
+    return {
+        **browser_context_args,
+        "locale": language,
+        "viewport": {"width": 1920, "height": 1080},
+    }
 
 
 @pytest.fixture()
@@ -71,7 +59,7 @@ def basket_page(page):
 
 
 @pytest.fixture()
-def authorized_user(page, login_page):
+def authorized_user(login_page):
     login_page.open_login_page()
     login_page.register_new_user()
     login_page.should_be_authorized_user()
