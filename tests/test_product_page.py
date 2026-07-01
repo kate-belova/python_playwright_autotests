@@ -11,10 +11,7 @@ class TestProductPage:
     @pytest.mark.guest
     @pytest.mark.smoke
     def test_guest_should_see_login_link_on_product_page(self, product_page):
-        link = (
-            "https://selenium1py.pythonanywhere.com/catalogue/"
-            "the-city-and-the-stars_95/"
-        )
+        link = product_page.PRODUCTS_CATALOGUE_URL + "/the-city-and-the-stars_95"
         product_page.open_product_page(link)
         product_page.should_be_login_link()
 
@@ -26,10 +23,7 @@ class TestProductPage:
     def test_guest_can_go_to_login_page_from_product_page(
         self, product_page, login_page
     ):
-        link = (
-            "https://selenium1py.pythonanywhere.com/catalogue/"
-            "test-driven-development_124/"
-        )
+        link = product_page.PRODUCTS_CATALOGUE_URL + "/test-driven-development_124"
         product_page.open_product_page(link)
         product_page.click_login_link()
         login_page.should_be_login_page()
@@ -52,8 +46,8 @@ class TestProductPage:
     )
     def test_guest_can_add_product_to_basket(self, num, product_page):
         link = (
-            f"https://selenium1py.pythonanywhere.com/catalogue/"
-            f"coders-at-work_207/?promo=offer{num}"
+            product_page.PRODUCTS_CATALOGUE_URL
+            + f"/coders-at-work_207/?promo=offer{num}"
         )
         product_page.open_product_page(link)
         product_page.solve_quiz_and_send_code()
@@ -67,7 +61,7 @@ class TestProductPage:
     @pytest.mark.user
     @pytest.mark.smoke
     def test_user_can_add_product_to_basket(self, authorized_user, product_page):
-        link = "https://selenium1py.pythonanywhere.com/catalogue/" "coders-at-work_207/"
+        link = product_page.PRODUCTS_CATALOGUE_URL + "/coders-at-work_207"
         product_page.open_product_page(link)
         product_page.click_add_to_basket_button()
         product_page.assert_basket_messages()
@@ -78,7 +72,7 @@ class TestProductPage:
     @pytest.mark.basket
     @pytest.mark.guest
     def test_guest_should_not_see_success_basket_message(self, product_page):
-        link = "https://selenium1py.pythonanywhere.com/catalogue/the-clean-coder_150/"
+        link = product_page.PRODUCTS_CATALOGUE_URL + "/the-clean-coder_150"
         product_page.open_product_page(link)
         product_page.assert_success_alert_absence()
 
@@ -90,9 +84,7 @@ class TestProductPage:
     def test_user_should_not_see_success_basket_message(
         self, authorized_user, product_page
     ):
-        link = (
-            "https://selenium1py.pythonanywhere.com/" "catalogue/the-clean-coder_150/"
-        )
+        link = product_page.PRODUCTS_CATALOGUE_URL + "/the-clean-coder_150"
         product_page.open_product_page(link)
         product_page.assert_success_alert_absence()
 
@@ -105,8 +97,8 @@ class TestProductPage:
         self, product_page, basket_page
     ):
         link = (
-            "https://selenium1py.pythonanywhere.com/catalogue/"
-            "sams-teach-yourself-mysql-in-24-hours_145/"
+            product_page.PRODUCTS_CATALOGUE_URL
+            + "/sams-teach-yourself-mysql-in-24-hours_145"
         )
         product_page.open_product_page(link)
         product_page.click_view_basket_link()

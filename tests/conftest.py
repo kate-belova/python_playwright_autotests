@@ -7,10 +7,11 @@ from pages.login_page import LoginPage
 from pages.main_page import MainPage
 from pages.product_page import ProductPage
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
 
 def pytest_configure(config):
-    current_file = Path(__file__).resolve()
-    allure_dir = current_file.parents[1] / "allure-results"
+    allure_dir = PROJECT_ROOT / "allure-results"
     allure_dir.mkdir(exist_ok=True)
     config.option.allure_report_dir = str(allure_dir)
 

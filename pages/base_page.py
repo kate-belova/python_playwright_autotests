@@ -15,6 +15,8 @@ class BasePage:
 
         self.USER_ICON = self.PAGE.locator(".icon-user")
 
+        self.PRODUCTS_CATALOGUE_URL = "https://selenium1py.pythonanywhere.com/catalogue"
+
     def open(self, url):
         self.PAGE.goto(url)
 
