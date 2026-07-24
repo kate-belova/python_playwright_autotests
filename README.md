@@ -52,7 +52,7 @@ python -m venv .venv
 # Linux/macOS
 source .venv/bin/activate
 
-pip install -r requirements.txt
+uv sync
 playwright install
 ```
 
